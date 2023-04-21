@@ -531,7 +531,7 @@ class connman:
                         'TetheringIdentifier': {
                             'order': 3,
                             'name': 32198,
-                            'value': 'CoreELEC-AP',
+                            'value': 'RicrdssonTv-AP',
                             'action': 'set_technologie',
                             'type': 'text',
                             'dbus': 'String',

@@ -282,7 +282,7 @@ class updates:
             dtname = self.oe.execute('/usr/bin/dtname', get_result=1).rstrip('\x00\n')
             if dtname == 'unknown':
                 xbmcDialog = xbmcgui.Dialog()
-                xbmcDialog.notification('CoreELEC DT-ID not found', ' Please update /flash/dtb.img!', xbmcgui.NOTIFICATION_WARNING, 30000)
+                xbmcDialog.notification('RicrdssonTv DT-ID not found', ' Please update /flash/dtb.img!', xbmcgui.NOTIFICATION_WARNING, 30000)
             return dtname
         elif self.oe.PROJECT in ['Allwinner', 'Amlogic', 'NXP', 'Qualcomm', 'Rockchip', 'RPi', 'Samsung' ]:
             return self.get_hardware_flags_dtflag()
@@ -467,7 +467,7 @@ class updates:
                 if self.struct['update']['settings']['Build']['value'] != '':
                     self.update_file = self.update_json[self.struct['update']['settings']['Channel']['value']]['url'] + self.get_available_builds(self.struct['update']['settings']['Build']['value'])
                     message = '%s: %s\n%s: %s\n%s' % (self.oe._(32188), version, self.oe._(32187), self.struct['update']['settings']['Build']['value'], self.oe._(32180))
-                    answer = xbmcDialog.yesno('CoreELEC Update', message)
+                    answer = xbmcDialog.yesno('RicrdssonTv Update', message)
                     xbmcDialog = None
                     del xbmcDialog
                     if answer:
@@ -482,7 +482,7 @@ class updates:
         try:
             self.oe.dbg_log('updates::get_json', 'enter_function', self.oe.LOGDEBUG)
             if url is None:
-                url = self.UPDATE_DOWNLOAD_URL % ('update.coreelec.org', '', 'releases.php')
+                url = self.UPDATE_DOWNLOAD_URL % ('repo.richardpodzemsky.cz', '', 'releases.php')
             data = self.oe.load_url(url)
             if not data is None:
                 update_json = json.loads(data)
@@ -602,7 +602,7 @@ class updates:
                     else:
                         if self.oe.BUILD == 'official':
                             if self.struct['update']['settings']['UpdateNotify']['value'] == '1':
-                                ceUpdate = xbmcgui.Dialog().yesno('CoreELEC', 'An update is available, would you like to download it now?')
+                                ceUpdate = xbmcgui.Dialog().yesno('RicrdssonTv', 'An update is available, would you like to download it now?')
                                 if(ceUpdate):
                                     self.update_in_progress = True
                                     self.do_autoupdate(None, True)
@@ -623,7 +623,7 @@ class updates:
                         self.oe.notify(self.oe._(32363), self.oe._(32366))
                     shutil.move(self.oe.TEMP + 'update_file', self.LOCAL_UPDATE_DIR + self.update_file)
                     subprocess.call('sync', shell=True, stdin=None, stdout=None, stderr=None)
-                    ceReboot = xbmcgui.Dialog().yesno('CoreELEC', 'An update has been downloaded, would you like to reboot now to apply it?')
+                    ceReboot = xbmcgui.Dialog().yesno('RicrdssonTv', 'An update has been downloaded, would you like to reboot now to apply it?')
                     if(ceReboot):
                         xbmc.restart()
                 else:

@@ -531,7 +531,7 @@ class system:
             self.total_backup_size = 1
             self.done_backup_size = 1
             xbmcDialog = xbmcgui.Dialog()
-            includeThumbnails = 1 == xbmcDialog.yesno('CoreELEC Backup', 'Should this backup include the thumbnails folder(s)?', yeslabel='Include', nolabel='Exclude')
+            includeThumbnails = 1 == xbmcDialog.yesno('RicrdssonTv Backup', 'Should this backup include the thumbnails folder(s)?', yeslabel='Include', nolabel='Exclude')
 
             try:
                 self.oe.set_busy(1)
@@ -563,7 +563,7 @@ class system:
                     pass
 
                 self.backup_dlg = xbmcgui.DialogProgress()
-                self.backup_dlg.create('CoreELEC', self.oe._(32375))
+                self.backup_dlg.create('RicrdssonTv', self.oe._(32375))
                 if not os.path.exists(self.BACKUP_DESTINATION):
                     os.makedirs(self.BACKUP_DESTINATION)
                 self.backup_file = self.oe.timestamp() + '.tar'

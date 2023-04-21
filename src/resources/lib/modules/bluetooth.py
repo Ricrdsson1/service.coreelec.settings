@@ -157,7 +157,7 @@ class bluetooth:
                 self.oe.dbg_log('bluetooth::adapter_powered', 'set state (' + str(state) + ')', self.oe.LOGDEBUG)
                 adapter_interface = dbus.Interface(self.oe.dbusSystemBus.get_object('org.bluez', adapter.object_path),
                                                    'org.freedesktop.DBus.Properties')
-                adapter_interface.Set('org.bluez.Adapter1', 'Alias', dbus.String(os.environ.get('HOSTNAME', 'coreelec')))
+                adapter_interface.Set('org.bluez.Adapter1', 'Alias', dbus.String(os.environ.get('HOSTNAME', 'ricrdssontv')))
                 adapter_interface.Set('org.bluez.Adapter1', 'Powered', dbus.Boolean(state))
                 adapter_interface = None
             connect_paired = self.oe.get_service_option('bluez', 'CONNECT_PAIRED', '1')
