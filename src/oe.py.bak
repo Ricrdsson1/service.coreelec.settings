@@ -235,7 +235,7 @@ class ProgressDialog:
     def getSpeed(self):
         return self.speed
 
-    def open(self, heading='RicrdssonTv', line1='', line2='', line3=''):
+    def open(self, heading='CoreELEC', line1='', line2='', line3=''):
         self.dialog = xbmcgui.DialogProgress()
         self.dialog.create(heading, '%s\n%s\n%s' % (line1, line2, line3))
         self.reset()

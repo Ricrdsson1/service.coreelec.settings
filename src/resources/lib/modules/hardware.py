@@ -15,7 +15,7 @@ import random
 
 class hardware:
     ENABLED = False
-    KERNEL_CMD = None
+    need_inject = False
     check_for_reboot = False
     menu = {'8': {
         'name': 32004,
@@ -25,17 +25,11 @@ class hardware:
         }}
 
     power_compatible_devices = [
-        'khadas_vim4',
-        'khadas_vim1s',
+        'odroid_n2',
+        'odroid_c4',
     ]
 
     remotes = [
-        {
-            "name": "Not Defined",
-            "remotewakeup": "0xffffffff",
-            "decode_type": "0x0",
-            "remotewakeupmask": "0xffffffff"
-        },
         {
             "name": "Hardkernel",
             "remotewakeup": "0x23dc4db2",
@@ -223,17 +217,8 @@ class hardware:
                             'action': 'set_value_xml',
                             'type': 'multivalue',
                             },
-                        'bct3236_led': {
-                            'order': 4,
-                            'name': 32519,
-                            'InfoText': 789,
-                            'value': '',
-                            'xml_node': 'bct3236_led',
-                            'action': 'set_value_xml',
-                            'type': 'multivalue',
-                            },
                         'spicc0': {
-                            'order': 5,
+                            'order': 4,
                             'name': 32528,
                             'InfoText': 902,
                             'value': '',
@@ -242,7 +227,7 @@ class hardware:
                             'type': 'multivalue',
                             },
                         'spicc1': {
-                            'order': 6,
+                            'order': 5,
                             'name': 32528,
                             'InfoText': 902,
                             'value': '',
@@ -251,7 +236,7 @@ class hardware:
                             'type': 'multivalue',
                             },
                         'remote_type': {
-                            'order': 7,
+                            'order': 6,
                             'name': 32529,
                             'InfoText': 903,
                             'value': 'NEC',
@@ -260,7 +245,7 @@ class hardware:
                             'type': 'multivalue',
                             },
                         'dvb': {
-                            'order': 8,
+                            'order': 7,
                             'name': 32530,
                             'InfoText': 904,
                             'value': '',
@@ -269,7 +254,7 @@ class hardware:
                             'type': 'multivalue',
                             },
                         'emmc': {
-                            'order': 9,
+                            'order': 8,
                             'name': 32525,
                             'InfoText': 900,
                             'value': '',
@@ -279,7 +264,7 @@ class hardware:
                             'dangerous': True,
                             },
                         'slowsdio': {
-                            'order': 10,
+                            'order': 9,
                             'name': 32526,
                             'InfoText': 901,
                             'value': '',
@@ -288,7 +273,7 @@ class hardware:
                             'type': 'multivalue',
                             },
                         'int_ext_phy': {
-                            'order': 11,
+                            'order': 10,
                             'name': 32531,
                             'InfoText': 905,
                             'value': '',
@@ -297,7 +282,7 @@ class hardware:
                             'type': 'multivalue',
                             },
                         'ip1001': {
-                            'order': 12,
+                            'order': 11,
                             'name': 32533,
                             'InfoText': 906,
                             'value': '',
@@ -306,7 +291,7 @@ class hardware:
                             'type': 'multivalue',
                             },
                         'k_usb3_pcie': {
-                            'order': 13,
+                            'order': 12,
                             'name': 32534,
                             'InfoText': 907,
                             'value': '',
@@ -315,20 +300,11 @@ class hardware:
                             'type': 'multivalue',
                             },
                         'smartchip': {
-                            'order': 14,
+                            'order': 13,
                             'name': 32535,
                             'InfoText': 908,
                             'value': '',
                             'xml_node': 'smartchip',
-                            'action': 'set_value_xml',
-                            'type': 'multivalue',
-                            },
-                        'motorcomm': {
-                            'order': 15,
-                            'name': 32536,
-                            'InfoText': 913,
-                            'value': '',
-                            'xml_node': 'motorcomm',
                             'action': 'set_value_xml',
                             'type': 'multivalue',
                             },
@@ -436,12 +412,31 @@ class hardware:
         self.oe.set_busy(1)
         suppress_dialog = False
         xbmcDialog = xbmcgui.Dialog()
+        if self.struct['power']['settings']['inject_bl301']['value'] == '1':
+            if hardware.need_inject:
+                IBL_Code = self.run_inject_bl301('-Y')
+
+                if IBL_Code == 0:
+                    self.load_values()
+                    response = xbmcDialog.ok(self.oe._(33512), self.oe._(33517))
+                    suppress_dialog = True
+                elif IBL_Code == 1:
+                    response = xbmcDialog.ok(self.oe._(33513), self.oe._(33520))
+                    suppress_dialog = True
+                elif IBL_Code == (-2 & 0xff):
+                    response = xbmcDialog.ok(self.oe._(33514), self.oe._(33519))
+                else:
+                    response = xbmcDialog.ok(self.oe._(33514), self.oe._(33518) % IBL_Code)
+
+                if IBL_Code != 0:
+                    self.oe.dbg_log('hardware::set_bl301', 'ERROR: (%d)' % IBL_Code, 4)
 
         if hardware.check_for_reboot:
             ret = subprocess.call("/usr/lib/coreelec/dtb-xml", shell=True)
             if ret == 1 and not suppress_dialog:
                 response = xbmcDialog.ok(self.oe._(33512), self.oe._(33523))
 
+        hardware.need_inject = False
         hardware.check_for_reboot = False
         self.oe.set_busy(0)
         self.oe.dbg_log('hardware::exit', 'exit_function', 0)
@@ -506,31 +501,20 @@ class hardware:
             self.oe.dbg_log('hardware::inject_check_compatibility', 'enter_function', 0)
             ret = False
             platform_version = platform.release().split('.')
-            self.oe.dbg_log('hardware::inject_check_compatibility', 'platform_version: %s' % platform_version, 0)
-            if ((int(platform_version[0]) >= 4 and int(platform_version[1]) >= 9) or \
-                (int(platform_version[0]) >= 5 and int(platform_version[1]) >= 4)) and \
+            if int(platform_version[0]) >= 4 and int(platform_version[1]) >= 9 and \
                 os.path.exists('/usr/sbin/inject_bl301'):
                 if self.run_inject_bl301('-c') == 0:
                     ret = True
-            self.oe.dbg_log('hardware::inject_check_compatibility', 'exit_function, ret: %s' % ret, 0)
+            self.oe.dbg_log('hardware::inject_check_compatibility', 'exit_function', 0)
         except Exception as e:
             self.oe.dbg_log('hardware::inject_check_compatibility', 'ERROR: (' + repr(e) + ')')
-        finally:
-            return ret
-
-    def injection_done(self):
-        try:
-            self.oe.dbg_log('hardware::injection_done', 'enter_function', 0)
-            ret = bool(os.path.exists('/run/bl301_injected'))
-            self.oe.dbg_log('hardware::injection_done', 'exit_function, ret: %s' % ret, 0)
-        except Exception as e:
-            self.oe.dbg_log('hardware::injection_done', 'ERROR: (' + repr(e) + ')')
         finally:
             return ret
 
     def load_values(self):
         try:
             self.oe.dbg_log('hardware::load_values', 'enter_function', 0)
+            hide_power_section = True
 
             if not os.path.exists('/sys/class/fan'):
                 self.struct['fan']['hidden'] = 'true'
@@ -552,7 +536,6 @@ class hardware:
             self.fill_values_by_xml(self.struct['dtb_settings']['settings']['sys_led'])
             self.fill_values_by_xml(self.struct['dtb_settings']['settings']['red_led'])
             self.fill_values_by_xml(self.struct['dtb_settings']['settings']['green_led'])
-            self.fill_values_by_xml(self.struct['dtb_settings']['settings']['bct3236_led'])
             self.fill_values_by_xml(self.struct['dtb_settings']['settings']['spicc0'])
             self.fill_values_by_xml(self.struct['dtb_settings']['settings']['spicc1'])
             self.fill_values_by_xml(self.struct['dtb_settings']['settings']['dvb'])
@@ -562,104 +545,98 @@ class hardware:
             self.fill_values_by_xml(self.struct['dtb_settings']['settings']['ip1001'])
             self.fill_values_by_xml(self.struct['dtb_settings']['settings']['k_usb3_pcie'])
             self.fill_values_by_xml(self.struct['dtb_settings']['settings']['smartchip'])
-            self.fill_values_by_xml(self.struct['dtb_settings']['settings']['motorcomm'])
 
             # check if Smartchip device is found
             if os.path.exists('/sys/bus/sdio/devices'):
                 sdio_devices = self.get_sdio_devices().split('\n')
-                if sdio_devices.count("02E7:908") == 0:
+                if sdio_devices.count("02E7:9086") == 0:
                     self.struct['dtb_settings']['settings']['smartchip']['hidden'] = 'true'
 
-            if not (self.inject_check_compatibility() or self.check_compatibility()):
-                self.struct['power']['hidden'] = 'true'
+            if not self.inject_check_compatibility():
+                self.struct['power']['settings']['inject_bl301']['hidden'] = 'true'
+                self.struct['power']['settings']['inject_bl301']['value'] = '0'
             else:
-                if not self.inject_check_compatibility() or self.check_compatibility():
-                    self.struct['power']['settings']['inject_bl301']['hidden'] = 'true'
-                    self.struct['power']['settings']['inject_bl301']['value'] = '0'
-                else:
+                if os.path.exists('/run/bl301_injected'):
+                    hide_power_section = False
                     if 'hidden' in self.struct['power']['settings']['inject_bl301']:
                         del self.struct['power']['settings']['inject_bl301']['hidden']
-                    if self.injection_done():
-                        self.struct['power']['settings']['inject_bl301']['value'] = '1'
-                    else:
-                        self.struct['power']['settings']['inject_bl301']['value'] = '0'
-
-                if not (self.injection_done() or self.check_compatibility()):
-                    self.struct['power']['settings']['remote_power']['hidden'] = 'true'
+                    self.struct['power']['settings']['inject_bl301']['value'] = '1'
                 else:
-                    if 'hidden' in self.struct['power']['settings']['remote_power']:
-                        del self.struct['power']['settings']['remote_power']['hidden']
+                    self.struct['power']['settings']['inject_bl301']['value'] = '0'
 
-                    remotewakeup = self.oe.get_config_ini('remotewakeup')
-                    if not bool(remotewakeup):
-                        cmd_file = open(self.KERNEL_CMD, 'r')
-                        for item in ((item).split('=') for item in cmd_file.read().split(' ')):
-                            if item[0] == 'remotewakeup':
-                                remotewakeup = item[1]
-                        cmd_file.close()
+            power_setting_visible = bool(int(self.struct['power']['settings']['inject_bl301']['value'])) or self.check_compatibility()
 
-                    remote_names = []
-                    remote_is_known = 0
-                    for remote_file in sorted(os.listdir('/storage/.config')):
-                        if remote_file.endswith('.remotewakeup'):
-                            f = open('/storage/.config/%s' % remote_file)
-                            fl = f.readlines()
-                            f.close()
-                            custom_remote = {}
-                            if not any(s for s in self.remotes if os.path.splitext(remote_file)[0] in s['name']):
-                                custom_remote['name'] = os.path.splitext(remote_file)[0]
-                                keys = ['remotewakeup', 'decode_type', 'remotewakeupmask']
-                                for key in keys:
-                                    for i, line in enumerate(fl):
-                                        regex = r"^[^#]*\b%s=([^#]*)#*" % (key)
-                                        match = re.search(regex, line)
-                                        if match:
-                                            val = match.group(1).strip()
-                                            regex = r"^[\'\"].*[\'\"]$"
-                                            if re.search(regex, val):
-                                                val = val[1:-1]
-                                            custom_remote[key] = val
-                                            break
-                                self.remotes.append(custom_remote)
+            if not power_setting_visible:
+                self.struct['power']['settings']['remote_power']['hidden'] = 'true'
+            else:
+                hide_power_section = False
+                if 'hidden' in self.struct['power']['settings']['remote_power']:
+                    del self.struct['power']['settings']['remote_power']['hidden']
 
-                    for remote in self.remotes:
-                      remote_names.append(remote["name"])
-                      if remote["remotewakeup"] in remotewakeup:
-                        self.struct['power']['settings']['remote_power']['value'] = remote["name"]
-                        remote_is_known = 1
+                remotewakeup = self.oe.get_config_ini('remotewakeup')
 
-                    if remotewakeup != '' and remote_is_known == 0:
-                        self.struct['power']['settings']['remote_power']['value'] = 'Custom'
+                remote_names = []
+                remote_is_known = 0
+                for remote_file in sorted(os.listdir('/storage/.config')):
+                    if remote_file.endswith('.remotewakeup'):
+                        f = open('/storage/.config/%s' % remote_file)
+                        fl = f.readlines()
+                        f.close()
+                        custom_remote = {}
+                        if not any(s for s in self.remotes if os.path.splitext(remote_file)[0] in s['name']):
+                            custom_remote['name'] = os.path.splitext(remote_file)[0]
+                            keys = ['remotewakeup', 'decode_type', 'remotewakeupmask']
+                            for key in keys:
+                                for i, line in enumerate(fl):
+                                    regex = r"^[^#]*\b%s=([^#]*)#*" % (key)
+                                    match = re.search(regex, line)
+                                    if match:
+                                        val = match.group(1).strip()
+                                        regex = r"^[\'\"].*[\'\"]$"
+                                        if re.search(regex, val):
+                                            val = val[1:-1]
+                                        custom_remote[key] = val
+                                        break
+                            self.remotes.append(custom_remote)
 
-                    self.struct['power']['settings']['remote_power']['values'] = remote_names
+                for remote in self.remotes:
+                  remote_names.append(remote["name"])
+                  if remote["remotewakeup"] in remotewakeup:
+                    self.struct['power']['settings']['remote_power']['value'] = remote["name"]
+                    remote_is_known = 1
 
-                if not (self.injection_done() or self.check_compatibility()):
-                    self.struct['power']['settings']['wol']['hidden'] = 'true'
-                else:
-                    if 'hidden' in self.struct['power']['settings']['wol']:
-                        del self.struct['power']['settings']['wol']['hidden']
-                    wol = self.oe.get_config_ini('wol', '0')
-                    if any("0.0:00" in s for s in os.listdir('/sys/bus/mdio_bus/drivers/RTL8211F Gigabit Ethernet')):
-                        if wol == '' or "0" in wol:
-                            self.struct['power']['settings']['wol']['value'] = '0'
-                        if "1" in wol:
-                            self.struct['power']['settings']['wol']['value'] = '1'
-                    else:
-                        self.struct['power']['settings']['wol']['hidden'] = 'true'
-                        if "1" in wol:
-                            self.oe.set_config_ini("wol", "0")
+                if remotewakeup == '':
+                    self.struct['power']['settings']['remote_power']['value'] = ''
+                if remotewakeup != '' and remote_is_known == 0:
+                    self.struct['power']['settings']['remote_power']['value'] = 'Custom'
 
-                if not (self.injection_done() or self.check_compatibility()):
-                    self.struct['power']['settings']['usbpower']['hidden'] = 'true'
-                else:
-                    if 'hidden' in self.struct['power']['settings']['usbpower']:
-                        del self.struct['power']['settings']['usbpower']['hidden']
+                self.struct['power']['settings']['remote_power']['values'] = remote_names
 
-                    usbpower = self.oe.get_config_ini('usbpower', '0')
-                    if usbpower == '' or "0" in usbpower:
-                        self.struct['power']['settings']['usbpower']['value'] = '0'
-                    if "1" in usbpower:
-                        self.struct['power']['settings']['usbpower']['value'] = '1'
+            wol = self.oe.get_config_ini('wol', '0')
+            if any("stmmac" in s for s in os.listdir('/sys/bus/mdio_bus/drivers/RTL8211F Gigabit Ethernet')):
+                hide_power_section = False
+                if wol == '' or "0" in wol:
+                    self.struct['power']['settings']['wol']['value'] = '0'
+                if "1" in wol:
+                    self.struct['power']['settings']['wol']['value'] = '1'
+            else:
+                self.struct['power']['settings']['wol']['hidden'] = 'true'
+                if "1" in wol:
+                    self.oe.set_config_ini("wol", "0")
+
+
+            if not power_setting_visible or self.get_SoC_id() < 0x28:
+                self.struct['power']['settings']['usbpower']['hidden'] = 'true'
+            else:
+                hide_power_section = False
+                if 'hidden' in self.struct['power']['settings']['usbpower']:
+                    del self.struct['power']['settings']['usbpower']['hidden']
+
+                usbpower = self.oe.get_config_ini('usbpower', '0')
+                if usbpower == '' or "0" in usbpower:
+                    self.struct['power']['settings']['usbpower']['value'] = '0'
+                if "1" in usbpower:
+                    self.struct['power']['settings']['usbpower']['value'] = '1'
 
             if os.path.exists('/flash/vesa.enable'):
                 self.struct['display']['settings']['vesa_enable']['value'] = '1'
@@ -704,6 +681,9 @@ class hardware:
                 self.struct['hdd']['settings']['disk_idle']['value'] = disk_idle_time["name"]
 
             self.struct['hdd']['settings']['disk_idle']['values'] = disk_idle_times_names
+
+            if hide_power_section:
+                self.struct['power']['hidden'] = 'true'
 
             self.oe.dbg_log('hardware::load_values', 'exit_function', 0)
         except Exception as e:
@@ -771,6 +751,8 @@ class hardware:
                     self.oe.set_config_ini("remotewakeup", "\'" + remote["remotewakeup"] + "\'")
                     self.oe.set_config_ini("decode_type", "\'" + remote["decode_type"] + "\'")
                     self.oe.set_config_ini("remotewakeupmask" , "\'" + remote["remotewakeupmask"] + "\'")
+
+                    hardware.need_inject = True
 
             self.oe.dbg_log('hardware::set_remote_power', 'exit_function', 0)
         except Exception as e:
@@ -841,6 +823,8 @@ class hardware:
                 else:
                     self.oe.set_config_ini("wol", "0")
 
+                hardware.need_inject = True
+
             self.oe.dbg_log('hardware::set_wol', 'exit_function', 0)
         except Exception as e:
             self.oe.dbg_log('hardware::set_wol', 'ERROR: (%s)' % repr(e), 4)
@@ -858,6 +842,8 @@ class hardware:
                     self.oe.set_config_ini("usbpower", "1")
                 else:
                     self.oe.set_config_ini("usbpower", "0")
+
+                hardware.need_inject = True
 
             self.oe.dbg_log('hardware::set_usbpower', 'exit_function', 0)
         except Exception as e:
@@ -897,13 +883,13 @@ class hardware:
 
             value = self.struct['performance']['settings']['cpu_governor']['value']
             if not value is None and not value == '':
-                for policy in os.listdir('/sys/devices/system/cpu/cpufreq'):
-                    if any(value in s for s in open('/sys/devices/system/cpu/cpufreq/' + policy + '/scaling_available_governors', 'r')):
-                        sys_device = '/sys/devices/system/cpu/cpufreq/' + policy + '/scaling_governor'
-                        if os.access(sys_device, os.W_OK):
-                            cpu_governor_ctl = open(sys_device, 'w')
-                            cpu_governor_ctl.write(value)
-                            cpu_governor_ctl.close()
+                cpu_clusters = ["", "cpu0/", "cpu4/"]
+                for cluster in cpu_clusters:
+                    sys_device = '/sys/devices/system/cpu/' + cluster + 'cpufreq/scaling_governor'
+                    if os.access(sys_device, os.W_OK):
+                        cpu_governor_ctl = open(sys_device, 'w')
+                        cpu_governor_ctl.write(value)
+                        cpu_governor_ctl.close()
 
             self.oe.dbg_log('hardware::set_cpu_governor', 'exit_function', 0)
         except Exception as e:
@@ -1015,7 +1001,6 @@ class hardware:
                     var['hidden'] = 'true'
             else:
                 self.oe.dbg_log('hardware::fill_values_by_xml', '"%s" could not be read from dtb.xml' % var['xml_node'], 0)
-                var['hidden'] = 'true'
             self.oe.dbg_log('hardware::fill_values_by_xml', 'exit_function', 0)
         except Exception as e:
             self.oe.dbg_log('hardware::fill_values_by_xml', 'ERROR: (%s)' % repr(e), 4)
