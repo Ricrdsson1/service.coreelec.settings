@@ -48,8 +48,8 @@ services = {
     'SAMBA_SMDB': '/usr/sbin/smbd',
     'D_SAMBA_WORKGROUP': 'WORKGROUP',
     'D_SAMBA_SECURE': '0',
-    'D_SAMBA_USERNAME': 'coreelec',
-    'D_SAMBA_PASSWORD': 'coreelec',
+    'D_SAMBA_USERNAME': 'ricrdssontv',
+    'D_SAMBA_PASSWORD': 'ricrdssontv',
     'D_SAMBA_MINPROTOCOL': 'SMB2',
     'D_SAMBA_MAXPROTOCOL': 'SMB3',
     'D_SAMBA_AUTOSHARE': '1',
@@ -82,7 +82,7 @@ system = {
 
 updates = {
     'ENABLED': not os.path.exists('/dev/.update_disabled'),
-    'UPDATE_REQUEST_URL': 'https://update.coreelec.org/updates.php',
+    'UPDATE_REQUEST_URL': 'https://repo.richardpodzemsky.cz/updates.php',
     'UPDATE_DOWNLOAD_URL': 'https://%s/%s/%s',
     'LOCAL_UPDATE_DIR': '/storage/.update/',
 

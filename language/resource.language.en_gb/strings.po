@@ -1,7 +1,7 @@
 # Kodi Media Center language file
-# Addon Name: @DISTRONAME@ Configuration
+# Addon Name: RicrdssonTv Configuration
 # Addon id: service.coreelec.settings
-# Addon Provider: CoreELEC
+# Addon Provider: RicrdssonTv
 msgid ""
 msgstr ""
 "MIME-Version: 1.0\n"
@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgctxt "#600"
-msgid "@DISTRONAME@ Settings"
+msgid "RicrdssonTv Settings"
 msgstr ""
 
 msgctxt "#601"
@@ -45,11 +45,11 @@ msgid "Architecture: "
 msgstr ""
 
 msgctxt "#609"
-msgid "CoreELEC is created by a global team of Linux and Kodi enthusiasts who contribute time and effort to manage the project, write code, and provide support. We have fun making it. We hope you have fun using it!"
+msgid "RicrdssonTv is created by a global team of Linux and Kodi enthusiasts who contribute time and effort to manage the project, write code, and provide support. We have fun making it. We hope you have fun using it!"
 msgstr ""
 
 msgctxt "#610"
-msgid "[B]Support[/B] is provided via our forum:[CR]https://discourse.coreelec.org[CR][CR][B]Documentation[/B] can be read at our website:[CR]https://coreelec.org[CR][CR][B]Wiki[/B] can be read at our website:[CR]https://wiki.coreelec.org[CR][CR][B]Code[/B] can be found on GitHub:[CR]https://github.com/CoreELEC[CR][CR]"
+msgid "[B]Support[/B] is provided via our forum:[CR]https://discourse.coreelec.org[CR][CR][B]Documentation[/B] can be read at our website:[CR]https://coreelec.org[CR][CR][B]Wiki[/B] can be read at our website:[CR]https://wiki.coreelec.org[CR][CR][B]Code[/B] can be found on GitHub:[CR]https://github.com/RicrdssonTv[CR][CR]"
 msgstr ""
 
 msgctxt "#700"
@@ -81,7 +81,7 @@ msgid "Configure updates"
 msgstr ""
 
 msgctxt "#710"
-msgid "Configure the Hostname of your @DISTRONAME@ system. This will be used for the HTPC \\\\hostname in Windows and SMB server name in the Mac OS Finder"
+msgid "Configure the Hostname of your RicrdssonTv system. This will be used for the HTPC \\\\hostname in Windows and SMB server name in the Mac OS Finder"
 msgstr ""
 
 msgctxt "#711"
@@ -97,7 +97,7 @@ msgid "Configure the physical keyboard type"
 msgstr ""
 
 msgctxt "#714"
-msgid "@DISTRONAME@ can be configured for automatic or manual updates. Automatic updates are available on stable releases and stable release candidates. Automatic update self-disables on beta and development builds"
+msgid "RicrdssonTv can be configured for automatic or manual updates. Automatic updates are available on stable releases and stable release candidates. Automatic update self-disables on beta and development builds"
 msgstr ""
 
 msgctxt "#715"
@@ -121,11 +121,11 @@ msgid "Set to ON to enable the Bluetooth service"
 msgstr ""
 
 msgctxt "#721"
-msgid "Send CoreELEC debug info without logs to http://ix.io, and display the short URL"
+msgid "Send RicrdssonTv debug info without logs to http://ix.io, and display the short URL"
 msgstr ""
 
 msgctxt "#722"
-msgid "Create a tar archive containing all @DISTRONAME@ and Kodi configuration settings, databases and thumbnail content. Backup files will be stored in /storage/backup/"
+msgid "Create a tar archive containing all RicrdssonTv and Kodi configuration settings, databases and thumbnail content. Backup files will be stored in /storage/backup/"
 msgstr ""
 
 msgctxt "#723"
@@ -133,11 +133,11 @@ msgid "Restore a tar archive backup previously created using the backup option a
 msgstr ""
 
 msgctxt "#724"
-msgid "[COLOR FF00FF00]SOFT RESET[/COLOR]\nPermanently reset @DISTRONAME@ configuration to defaults (resets also Kodi to default including your library. your media - music/videos/etc are not touched)"
+msgid "[COLOR FF00FF00]SOFT RESET[/COLOR]\nPermanently reset RicrdssonTv configuration to defaults (resets also Kodi to default including your library. your media - music/videos/etc are not touched)"
 msgstr ""
 
 msgctxt "#725"
-msgid "[COLOR FFFF0000]HARD RESET[/COLOR]\nPermanently reset @DISTRONAME@ and Kodi configuration to defaults (everything in your storage partition will be deleted)"
+msgid "[COLOR FFFF0000]HARD RESET[/COLOR]\nPermanently reset RicrdssonTv and Kodi configuration to defaults (everything in your storage partition will be deleted)"
 msgstr ""
 
 msgctxt "#726"
@@ -217,11 +217,11 @@ msgid "Set the password for SSH"
 msgstr ""
 
 msgctxt "#747"
-msgid "Enable a PIN for @DISTRONAME@ Settings access"
+msgid "Enable a PIN for RicrdssonTv Settings access"
 msgstr ""
 
 msgctxt "#748"
-msgid "Change the PIN Lock for @DISTRONAME@ Settings access"
+msgid "Change the PIN Lock for RicrdssonTv Settings access"
 msgstr ""
 
 msgctxt "#749"
@@ -233,7 +233,7 @@ msgid "750"
 msgstr ""
 
 msgctxt "#751"
-msgid "With OBEX filetransfer you can send files, for example movies or pictures over bluetooth to @DISTRONAME@."
+msgid "With OBEX filetransfer you can send files, for example movies or pictures over bluetooth to RicrdssonTv."
 msgstr ""
 
 msgctxt "#752"
@@ -289,7 +289,7 @@ msgid "Checking for a new version will submit the installed Distribution, Projec
 msgstr ""
 
 msgctxt "#773"
-msgid "Set the idle timeout (in minutes) before devices will be disconnected (defaults to 0 for no timeout). Applies to devices where \"Enable Standby\" has been activated in the @DISTRONAME@ device connection context menu."
+msgid "Set the idle timeout (in minutes) before devices will be disconnected (defaults to 0 for no timeout). Applies to devices where \"Enable Standby\" has been activated in the RicrdssonTv device connection context menu."
 msgstr ""
 
 msgctxt "#774"
@@ -653,7 +653,7 @@ msgid "Edit"
 msgstr ""
 
 msgctxt "#32180"
-msgid "Would you like to update @DISTRONAME@ now?"
+msgid "Would you like to update RicrdssonTv now?"
 msgstr ""
 
 msgctxt "#32181"
@@ -705,11 +705,11 @@ msgid "PIN lock"
 msgstr ""
 
 msgctxt "#32193"
-msgid "Enable @DISTRONAME@ Settings PIN Lock"
+msgid "Enable RicrdssonTv Settings PIN Lock"
 msgstr ""
 
 msgctxt "#32194"
-msgid "Change @DISTRONAME@ Settings PIN Lock"
+msgid "Change RicrdssonTv Settings PIN Lock"
 msgstr ""
 
 msgctxt "#32196"
@@ -829,15 +829,15 @@ msgid "Error - PIN codes did not match!"
 msgstr ""
 
 msgctxt "#32229"
-msgid "@DISTRONAME@ Settings PIN lock not set.[CR][CR]Please try again."
+msgid "RicrdssonTv Settings PIN lock not set.[CR][CR]Please try again."
 msgstr ""
 
 msgctxt "#32230"
-msgid "@DISTRONAME@ Settings PIN lock set."
+msgid "RicrdssonTv Settings PIN lock set."
 msgstr ""
 
 msgctxt "#32231"
-msgid "Your @DISTRONAME@ Settings PIN lock has been set to:"
+msgid "Your RicrdssonTv Settings PIN lock has been set to:"
 msgstr ""
 
 msgctxt "#32232"
@@ -845,7 +845,7 @@ msgid "Error - PIN code not 4 digits!"
 msgstr ""
 
 msgctxt "#32233"
-msgid "@DISTRONAME@ Settings Locked[CR]Enter 4 digit PIN"
+msgid "RicrdssonTv Settings Locked[CR]Enter 4 digit PIN"
 msgstr ""
 
 msgctxt "#32234"
@@ -861,7 +861,7 @@ msgid "You have entered an incorrect PIN too many times.[CR][CR]You will need to
 msgstr ""
 
 msgctxt "#32237"
-msgid "@DISTRONAME@ Settings Locked!"
+msgid "RicrdssonTv Settings Locked!"
 msgstr ""
 
 msgctxt "#32238"
@@ -877,7 +877,7 @@ msgid "Wireless Regulatory Domain"
 msgstr ""
 
 msgctxt "#32300"
-msgid "Welcome to @DISTRONAME@"
+msgid "Welcome to RicrdssonTv"
 msgstr ""
 
 msgctxt "#32301"
@@ -885,7 +885,7 @@ msgid "Welcome"
 msgstr ""
 
 msgctxt "#32302"
-msgid "This wizard will guide you through the process of setting up your new @DISTRONAME@ installation - setting your location, timezone and connecting you to the internet.[CR][CR]These settings can be changed later by navigating to Programs > @DISTRONAME@ Settings."
+msgid "This wizard will guide you through the process of setting up your new RicrdssonTv installation - setting your location, timezone and connecting you to the internet.[CR][CR]These settings can be changed later by navigating to Programs > RicrdssonTv Settings."
 msgstr ""
 
 msgctxt "#32303"
@@ -893,7 +893,7 @@ msgid "Next"
 msgstr ""
 
 msgctxt "#32304"
-msgid "To be identified easily on the network, your new @DISTRONAME@ machine needs a name.[CR][CR]Try to choose something meaningful - like the room it's in - so you'll know what it is when you see it on the network.[CR][CR]This name is used when configuring network services, like file sharing using samba."
+msgid "To be identified easily on the network, your new RicrdssonTv machine needs a name.[CR][CR]Try to choose something meaningful - like the room it's in - so you'll know what it is when you see it on the network.[CR][CR]This name is used when configuring network services, like file sharing using samba."
 msgstr ""
 
 msgctxt "#32305"
@@ -901,7 +901,7 @@ msgid "Networking"
 msgstr ""
 
 msgctxt "#32306"
-msgid "In order to download backdrops, banners and thumbnails for your movies and TV shows and to stream online content from sites like YouTube, @DISTRONAME@ needs to be connected the Internet.[CR][CR]An Internet connection is also required for @DISTRONAME@ to automatically update itself."
+msgid "In order to download backdrops, banners and thumbnails for your movies and TV shows and to stream online content from sites like YouTube, RicrdssonTv needs to be connected the Internet.[CR][CR]An Internet connection is also required for RicrdssonTv to automatically update itself."
 msgstr ""
 
 msgctxt "#32307"
@@ -925,11 +925,11 @@ msgid "Sharing and Remote Access"
 msgstr ""
 
 msgctxt "#32312"
-msgid "@DISTRONAME@ also supports SSH for remote access. This is for advanced users who wish to interact with @DISTRONAME@'s underlying operating system. The default user is [COLOR blue]root[/COLOR] and the default password is [COLOR blue]@ROOT_PASSWORD@[/COLOR]."
+msgid "RicrdssonTv also supports SSH for remote access. This is for advanced users who wish to interact with RicrdssonTv's underlying operating system. The default user is [COLOR blue]root[/COLOR] and the default password is [COLOR blue]@ROOT_PASSWORD@[/COLOR]."
 msgstr ""
 
 msgctxt "#32313"
-msgid "In order to share your files between your computers @DISTRONAME@ has incorporated a samba server. This samba server can be integrated into your local network by accessing it in a familiar way with Finder or Windows Explorer."
+msgid "In order to share your files between your computers RicrdssonTv has incorporated a samba server. This samba server can be integrated into your local network by accessing it in a familiar way with Finder or Windows Explorer."
 msgstr ""
 
 msgctxt "#32316"
@@ -941,7 +941,7 @@ msgid "Thank you"
 msgstr ""
 
 msgctxt "#32318"
-msgid "Your @DISTRONAME@ installation is now complete and you are about to enter Kodi where you can set up your media libraries. For help with this, there is a guide available at wiki.kodi.tv[CR][CR]@DISTRONAME@ is developed by a dedicated team of developers who work purely in their spare time.[CR][CR]Finally, we hope you enjoy using @DISTRONAME@ as much as we've enjoyed building it. If you need any more help, you can find links to our support forum along with latest news at our website."
+msgid "Your RicrdssonTv installation is now complete and you are about to enter Kodi where you can set up your media libraries. For help with this, there is a guide available at wiki.kodi.tv[CR][CR]RicrdssonTv is developed by a dedicated team of developers who work purely in their spare time.[CR][CR]Finally, we hope you enjoy using RicrdssonTv as much as we've enjoyed building it. If you need any more help, you can find links to our support forum along with latest news at our website."
 msgstr ""
 
 msgctxt "#32319"
@@ -961,7 +961,7 @@ msgid "Reset System Settings to defaults"
 msgstr ""
 
 msgctxt "#32325"
-msgid "Reset @DISTRONAME@ to defaults"
+msgid "Reset RicrdssonTv to defaults"
 msgstr ""
 
 msgctxt "#32326"
@@ -1025,7 +1025,7 @@ msgid "Check for updates now:"
 msgstr ""
 
 msgctxt "#32363"
-msgid "@DISTRONAME@"
+msgid "RicrdssonTv"
 msgstr ""
 
 msgctxt "#32364"
@@ -1145,7 +1145,7 @@ msgid "** SAFE MODE! ** SAFE MODE! ** SAFE MODE! **"
 msgstr ""
 
 msgctxt "#32394"
-msgid "@DISTRONAME@ has temporarily started in safe mode due to repeated Kodi crashes.[CR][CR]You may now investigate the cause of the crashes by enabling ssh or Samba.[CR][CR]Your original Kodi installation can be accessed via \"/storage/.kodi.FAILED\" and the Samba \"Kodi-Failed\" share.[CR][CR]Rebooting will return to your original Kodi installation.[CR][CR]Go to https://discourse.coreelec.org if you require further assistance. When posting to the forum include the link to your crash log which can be viewed by clicking the crash log option in Settings > CoreELEC > System > Submit Log."
+msgid "RicrdssonTv has temporarily started in safe mode due to repeated Kodi crashes.[CR][CR]You may now investigate the cause of the crashes by enabling ssh or Samba.[CR][CR]Your original Kodi installation can be accessed via \"/storage/.kodi.FAILED\" and the Samba \"Kodi-Failed\" share.[CR][CR]Rebooting will return to your original Kodi installation.[CR][CR]Go to https://discourse.coreelec.org if you require further assistance. When posting to the forum include the link to your crash log which can be viewed by clicking the crash log option in Settings > RicrdssonTv > System > Submit Log."
 msgstr ""
 
 msgctxt "#32395"
@@ -1325,7 +1325,7 @@ msgid "Inject Bootloader BL301 Blob..."
 msgstr ""
 
 msgctxt "#33516"
-msgid "[B][COLOR red]Note: This will modify the firmware on your device.[/COLOR][/B][CR]The BL301 bootloader blob has been customized by the CoreELEC Team to support all features used to wake a device from a suspend or power off state!"
+msgid "[B][COLOR red]Note: This will modify the firmware on your device.[/COLOR][/B][CR]The BL301 bootloader blob has been customized by the RicrdssonTv Team to support all features used to wake a device from a suspend or power off state!"
 msgstr ""
 
 msgctxt "#33517"

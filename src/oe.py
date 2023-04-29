@@ -32,7 +32,7 @@ import imp
 from xbmc import LOGDEBUG, LOGINFO, LOGWARNING, LOGERROR
 import xml.etree.ElementTree as ET
 
-__author__ = 'CoreELEC'
+__author__ = 'RicrdssonTv'
 __scriptid__ = 'service.coreelec.settings'
 __addon__ = xbmcaddon.Addon(id=__scriptid__)
 __cwd__ = __addon__.getAddonInfo('path')
@@ -85,14 +85,14 @@ sys.path.append(xbmcvfs.translatePath(os.path.join(__cwd__, 'resources', 'lib', 
 try:
     encoding = locale.getpreferredencoding(do_setlocale=True)
 except Exception as e:
-    xbmc.log('## CoreELEC Addon ## ' + 'ERROR: (' + repr(e) + ')')
+    xbmc.log('## RicrdssonTv Addon ## ' + 'ERROR: (' + repr(e) + ')')
 imp.reload(sys)
 # sys.setdefaultencoding(encoding)
 
 ## load oeSettings modules
 
 import oeWindows
-xbmc.log('## CoreELEC Addon ## ' + str(__addon__.getAddonInfo('version')))
+xbmc.log('## RicrdssonTv Addon ## ' + str(__addon__.getAddonInfo('version')))
 
 class PINStorage:
     def __init__(self, module='system', prefix='pinlock', maxAttempts=4, delay=300):
@@ -235,7 +235,7 @@ class ProgressDialog:
     def getSpeed(self):
         return self.speed
 
-    def open(self, heading='CoreELEC', line1='', line2='', line3=''):
+    def open(self, heading='RicrdssonTv', line1='', line2='', line3=''):
         self.dialog = xbmcgui.DialogProgress()
         self.dialog.create(heading, '%s\n%s\n%s' % (line1, line2, line3))
         self.reset()
@@ -310,7 +310,7 @@ def _(code):
 def dbg_log(source, text, level=3):
     if level == 0 and os.environ.get('DEBUG', 'no') == 'no':
         return
-    xbmc.log('## CoreELEC Addon ## ' + source + ' ## ' + text, level)
+    xbmc.log('## RicrdssonTv Addon ## ' + source + ' ## ' + text, level)
     if level == 4:
         tracedata = traceback.format_exc()
         if tracedata != "NoneType: None\n":
@@ -726,7 +726,7 @@ def stop_service():
             module = dictModules[strModule]
             if hasattr(module, 'stop_service') and module.ENABLED:
                 module.stop_service()
-        xbmc.log('## CoreELEC Addon ## STOP SERVICE DONE !')
+        xbmc.log('## RicrdssonTv Addon ## STOP SERVICE DONE !')
     except Exception as e:
         dbg_log('oe::stop_service', 'ERROR: (' + repr(e) + ')')
 
@@ -744,7 +744,7 @@ def openReleaseNotes():
     global winOeMain, __cwd__, __oe__
     try:
         RNOTES = load_file('/etc/release-notes')
-        RNOTES_TITLE = 'Release Notes: CoreELEC %s' % VERSION
+        RNOTES_TITLE = 'Release Notes: RicrdssonTv %s' % VERSION
 
         #TODO: fix so this can be done in a way that doesn't leave blank line
         regex = '\[TITLE\](.*?)\[\/TITLE\]'
@@ -992,7 +992,7 @@ def split_dialog_text(text):
 
 def reboot_counter(seconds=10, title=' '):
     reboot_dlg = xbmcgui.DialogProgress()
-    reboot_dlg.create('CoreELEC %s' % title, ' ')
+    reboot_dlg.create('RicrdssonTv %s' % title, ' ')
     reboot_dlg.update(0)
     wait_time = seconds
     while seconds >= 0 and not (reboot_dlg.iscanceled() or xbmcm.abortRequested()):
